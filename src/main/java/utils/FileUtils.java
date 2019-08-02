@@ -4,20 +4,22 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class FileUtils {
-    public static JSONObject getJsonFileAsJSONObject(String filePath) {
+    public static JSONObject getJsonFileAsJSONObject(String filePath) throws IOException, ParseException {
         JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject;
+        FileReader fileReader = null;
         try {
-            FileReader fileReader = new FileReader(filePath);
-            jsonObject = (JSONObject) jsonParser.parse(fileReader);
-        } catch (IOException | ParseException exception) {
-            System.out.println("Something went wrong while reading or parsing the file " + filePath);
+            fileReader = new FileReader(filePath);
+        } catch (FileNotFoundException exception) {
+            System.out.println("The configuration file " + filePath + " was not found.");
             exception.printStackTrace();
         }
+        jsonObject = (JSONObject) jsonParser.parse(fileReader);
         return jsonObject;
     }
 }
