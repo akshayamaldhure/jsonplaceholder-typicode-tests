@@ -4,11 +4,11 @@ import org.json.simple.JSONObject;
 
 public class Environment {
 
-    String baseUrl;
-    String postsEndpoint;
-    String commentsEndpoint;
+    public String baseUrl;
+    public String postsEndpoint;
+    public String commentsEndpoint;
 
-    Environment() {
+    public Environment() {
         String testEnvironment = System.getProperty("ENV", "staging");
         JSONObject configObject = (JSONObject) ConfigProvider.getConfigObject(testEnvironment);
         this.baseUrl = configObject.get("baseUrl").toString();

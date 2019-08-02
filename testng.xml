@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="jsonplaceholder-typicode-post-tests" verbose="1">
     <listeners>
-        <listener class-name="config.MyTestListener"/>
+        <listener class-name="common.MyTestListener"/>
     </listeners>
     <test name="post-tests">
         <classes>

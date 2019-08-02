@@ -1,5 +1,6 @@
-package config;
+package common;
 
+import config.Environment;
 import io.restassured.RestAssured;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
