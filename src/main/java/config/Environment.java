@@ -10,21 +10,26 @@ public class Environment {
     public String baseUrl;
     public String postsEndpoint;
     public String commentsEndpoint;
+    public String usersEndpoint;
 
     public Environment() {
         String testEnvironment = System.getProperty("ENV", "staging");
-        JSONObject configObject = null;
+        String commonConfigKey = "common";
+        JSONObject envConfig = new JSONObject();
+        JSONObject commonConfig = new JSONObject();
         try {
-            configObject = (JSONObject) ConfigProvider.getConfigObject(testEnvironment);
+            envConfig = (JSONObject) ConfigProvider.getConfigObject(testEnvironment);
+            commonConfig = (JSONObject) ConfigProvider.getConfigObject(commonConfigKey);
         } catch (IOException | ParseException e) {
             System.out.println("Something went wrong while parsing the environment data: " + e.getMessage());
         }
-        if (configObject == null) {
+        if (envConfig == null) {
             System.out.println("The test environment '" + testEnvironment + "' was not found. Please provide a valid test environment name.");
         }
-        this.baseUrl = configObject.get("baseUrl").toString();
-        this.postsEndpoint = configObject.get("posts").toString();
-        this.commentsEndpoint = configObject.get("comments").toString();
+        this.baseUrl = envConfig.get("baseUrl").toString();
+        this.postsEndpoint = commonConfig.get("posts").toString();
+        this.commentsEndpoint = commonConfig.get("comments").toString();
+        this.usersEndpoint = commonConfig.get("users").toString();
         System.out.println("Base URL: " + this.baseUrl);
     }
 }
