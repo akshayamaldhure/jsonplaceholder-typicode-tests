@@ -1,6 +1,6 @@
 package models;
 
-public class Comment {
+public class Comment { // POJO class that describes a comment
 
     private int postId;
     private int id;

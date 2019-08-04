@@ -1,6 +1,7 @@
 package models;
 
-public class Post {
+public class Post { // POJO class that describes a post
+
     private int userId;
     private int id;
     private String title;
