@@ -4,8 +4,9 @@
         <listener class-name="common.MyTestListener"/>
     </listeners>
     <test name="post-tests">
+        <parameter name="userName" value="Samantha"/>
         <classes>
-            <class name="PostTests"/>
+            <class name="tests.PostTests"/>
         </classes>
     </test>
 </suite>
