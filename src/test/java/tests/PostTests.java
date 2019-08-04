@@ -7,11 +7,14 @@ import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import models.Comment;
+import models.Post;
 import org.junit.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -23,7 +26,11 @@ public class PostTests {
     ResponseSpecification responseSpec;
     Environment environment;
     Response allUsersResponse;
+    Response allPostsByUserResponse;
+    Response allCommentsOnUserPostsResponse;
     int userId;
+    List<Post> allPostsByUser;
+    List<Comment> allCommentsOnUserPosts;
 
     @BeforeSuite
     public void setupRequestResponseSpecs() {
@@ -40,8 +47,13 @@ public class PostTests {
 
     @Test
     public void verifyGetAllUsers() {
-        allUsersResponse = given().spec(requestSpec)
+        allUsersResponse = given()
+                .spec(requestSpec)
                 .get(environment.usersEndpoint);
+        allUsersResponse
+                .then()
+                .assertThat()
+                .spec(responseSpec);
         allUsersResponse
                 .then()
                 .assertThat()
@@ -57,5 +69,39 @@ public class PostTests {
             System.out.println("userId for the username " + userName + " = " + userId);
         } else
             Assert.fail("No user found with username = " + userName);
+    }
+
+    @Test(dependsOnMethods = "verifyGetUserIdForUser")
+    public void verifyGetPostsByUserId() {
+        allPostsByUserResponse = given()
+                .spec(requestSpec)
+                .param("userId", userId)
+                .get(environment.postsEndpoint);
+        allPostsByUserResponse
+                .then()
+                .assertThat()
+                .spec(responseSpec);
+        allPostsByUser = Arrays.asList(allPostsByUserResponse.getBody().as(Post[].class));
+        allPostsByUser.forEach(post -> Assert.assertEquals(post.getUserId(), userId));
+    }
+
+    @Test(dependsOnMethods = "verifyGetPostsByUserId")
+    public void verifyPostComments() {
+        allPostsByUser.forEach(post -> {
+            int postId = post.getId();
+            allCommentsOnUserPostsResponse = given()
+                    .spec(requestSpec)
+                    .param("postId", postId)
+                    .get(environment.commentsEndpoint);
+            allCommentsOnUserPostsResponse
+                    .then()
+                    .assertThat()
+                    .spec(responseSpec);
+            allCommentsOnUserPosts = Arrays.asList(allCommentsOnUserPostsResponse.getBody().as(Comment[].class));
+            String emailRegex = "^(.+)@(.+)$";
+            allCommentsOnUserPosts.forEach(comment -> {
+                Assert.assertTrue(comment.getEmail().matches(emailRegex));
+            });
+        });
     }
 }
