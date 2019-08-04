@@ -2,11 +2,9 @@ package common;
 
 import config.Environment;
 import io.restassured.RestAssured;
-import org.testng.ISuite;
-import org.testng.ISuiteListener;
-import org.testng.SkipException;
+import org.testng.*;
 
-public class MyTestListener implements ISuiteListener {
+public class MyTestListener implements ISuiteListener, ITestListener {
 
     public void onStart(ISuite iSuite) {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
@@ -18,5 +16,40 @@ public class MyTestListener implements ISuiteListener {
 
     public void onFinish(ISuite iSuite) {
         System.out.println("Finished running all the tests.");
+    }
+
+    @Override
+    public void onTestStart(ITestResult iTestResult) {
+        System.out.println("Starting test " + iTestResult.getName());
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onTestFailure(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+
+    }
+
+    @Override
+    public void onStart(ITestContext iTestContext) {
+
+    }
+
+    @Override
+    public void onFinish(ITestContext iTestContext) {
+
     }
 }
