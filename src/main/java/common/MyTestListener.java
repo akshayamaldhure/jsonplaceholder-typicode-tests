@@ -8,8 +8,8 @@ public class MyTestListener implements ISuiteListener, ITestListener {
 
     public void onStart(ISuite iSuite) {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        Environment environment = new Environment();
-        RestAssured.baseURI = environment.baseUrl; // set the app baseURI "globally"
+        new Environment();
+        new Spec();
         if (!CommonTests.isAppBackendUp()) // check if the service under test is up before running any tests
             throw new SkipException("Skipping tests as the application backend is down.");
     }
@@ -25,17 +25,17 @@ public class MyTestListener implements ISuiteListener, ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-
+        System.out.println("Test " + iTestResult.getName() + " PASSED");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-
+        System.out.println("Test " + iTestResult.getName() + "  FAILED");
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-
+        System.out.println("Test " + iTestResult.getName() + " SKIPPED");
     }
 
     @Override
