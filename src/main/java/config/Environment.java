@@ -7,12 +7,13 @@ import java.io.IOException;
 
 public class Environment {
 
-    public String baseUrl;
-    public String postsEndpoint;
-    public String commentsEndpoint;
-    public String usersEndpoint;
+    public static String baseUrl;
+    public static String postsEndpoint;
+    public static String commentsEndpoint;
+    public static String usersEndpoint;
 
     public Environment() {
+        System.out.println("Setting up the test environment");
         String testEnvironment = System.getProperty("ENV", "staging");
         String commonConfigKey = "common";
         JSONObject envConfig = new JSONObject();
@@ -26,10 +27,10 @@ public class Environment {
         if (envConfig == null) {
             System.out.println("The test environment '" + testEnvironment + "' was not found. Please provide a valid test environment name.");
         }
-        this.baseUrl = envConfig.get("baseUrl").toString();
-        this.postsEndpoint = commonConfig.get("posts").toString();
-        this.commentsEndpoint = commonConfig.get("comments").toString();
-        this.usersEndpoint = commonConfig.get("users").toString();
-        System.out.println("Base URL: " + this.baseUrl);
+        Environment.baseUrl = envConfig.get("baseUrl").toString();
+        Environment.postsEndpoint = commonConfig.get("posts").toString();
+        Environment.commentsEndpoint = commonConfig.get("comments").toString();
+        Environment.usersEndpoint = commonConfig.get("users").toString();
+        System.out.println("Base URL: " + Environment.baseUrl);
     }
 }
