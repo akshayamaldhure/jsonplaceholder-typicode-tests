@@ -5,8 +5,12 @@
     </listeners>
     <test name="post-tests">
         <parameter name="userName" value="Samantha"/>
+        <parameter name="invalidUserName" value="ThisIsSomeInvalidNameThatCanNeverBeARealName"/>
+        <parameter name="invalidUserId" value="123456"/>
+        <parameter name="invalidPostId" value="123456"/>
         <classes>
             <class name="tests.PostTests"/>
+            <class name="tests.PostNegativeTests"/>
         </classes>
     </test>
 </suite>
