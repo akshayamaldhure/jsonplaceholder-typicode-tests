@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import models.Comment;
 import models.Post;
 import models.User;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.testng.annotations.Parameters;
