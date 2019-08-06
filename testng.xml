@@ -8,6 +8,10 @@
         <parameter name="invalidUserName" value="ThisIsSomeInvalidNameThatCanNeverBeARealName"/>
         <parameter name="invalidUserId" value="123456"/>
         <parameter name="invalidPostId" value="123456"/>
+        <parameter name="postTitle" value="Post title"/>
+        <parameter name="postBody" value="This is a sample post body"/>
+        <parameter name="updatedPostTitle" value="Updated post title"/>
+        <parameter name="fakePostId" value="1"/>
         <classes>
             <class name="tests.PostTests"/>
             <class name="tests.PostNegativeTests"/>
