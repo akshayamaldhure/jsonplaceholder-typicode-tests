@@ -13,8 +13,24 @@
         <parameter name="updatedPostTitle" value="Updated post title"/>
         <parameter name="fakePostId" value="1"/>
         <classes>
-            <class name="tests.PostTests"/>
-            <class name="tests.PostNegativeTests"/>
+            <class name="tests.PostTests">
+                <methods>
+                    <include name="verifyGetAllUsers"/>
+                    <include name="verifyGetUser"/>
+                    <include name="verifyGetPostsByUserId"/>
+                    <include name="verifyPostComments"/>
+                    <include name="verifyCreatePost"/>
+                    <include name="verifyUpdatePost"/>
+                    <include name="verifyDeletePost"/>
+                </methods>
+            </class>
+            <class name="tests.PostNegativeTests">
+                <methods>
+                    <include name="verifyGetUserWithInvalidNameReturnsAnEmptyArray"/>
+                    <include name="verifyGetPostsByInvalidUserIdReturnsAnEmptyArray"/>
+                    <include name="verifyGetPostCommentsByInvalidPostIdReturnsAnEmptyArray"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
