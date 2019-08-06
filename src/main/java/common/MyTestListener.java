@@ -2,9 +2,12 @@ package common;
 
 import config.Environment;
 import io.restassured.RestAssured;
+import org.apache.logging.log4j.Logger;
 import org.testng.*;
 
 public class MyTestListener implements ISuiteListener, ITestListener {
+
+    private Logger log = MyLogger.log;
 
     public void onStart(ISuite iSuite) {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
@@ -15,27 +18,27 @@ public class MyTestListener implements ISuiteListener, ITestListener {
     }
 
     public void onFinish(ISuite iSuite) {
-        System.out.println("Finished running all the tests.");
+        log.info("Finished running all the tests.");
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        System.out.println("Starting test " + iTestResult.getName());
+        log.info("Starting test " + iTestResult.getName());
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        System.out.println("Test " + iTestResult.getName() + " PASSED");
+        log.info("Test " + iTestResult.getName() + " PASSED");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        System.out.println("Test " + iTestResult.getName() + "  FAILED");
+        log.error("Test " + iTestResult.getName() + "  FAILED");
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        System.out.println("Test " + iTestResult.getName() + " SKIPPED");
+        log.warn("Test " + iTestResult.getName() + " SKIPPED");
     }
 
     @Override

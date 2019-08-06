@@ -1,5 +1,6 @@
 package tests;
 
+import common.MyLogger;
 import components.CommentComponent;
 import components.PostComponent;
 import components.UserComponent;
@@ -7,6 +8,8 @@ import io.restassured.response.Response;
 import models.Comment;
 import models.Post;
 import models.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -22,6 +25,7 @@ public class PostTests {
     private int userId;
     private List<Post> allPostsByUser;
     private List<Comment> allCommentsOnUserPosts;
+    private Logger log = MyLogger.log;
 
     @Test
     public void verifyGetAllUsers() {
@@ -37,7 +41,7 @@ public class PostTests {
         List<User> users = Arrays.asList(UserComponent.getUser(userName).getBody().as(User[].class));
         if (users.size() > 0) {
             userId = users.get(0).getId();
-            System.out.println("userId for the username " + userName + " = " + userId);
+            log.info("userId for the username " + userName + " = " + userId);
         } else
             Assert.fail("No user found with username = " + userName);
     }
